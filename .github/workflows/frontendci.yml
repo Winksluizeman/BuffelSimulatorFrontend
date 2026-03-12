@@ -1,0 +1,22 @@
+name: frontendci.yml
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build Angular app
+        working-directory: frontend
+        run: npx ng build --configuration production

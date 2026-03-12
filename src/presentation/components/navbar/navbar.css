@@ -1,0 +1,17 @@
+.navbar {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border:  1px solid black;
+}
+
+.nav-title {
+  font-family: "Rubik Glitch", Serif;
+}
+
+img {
+  width: 2rem;
+  padding-right: .25rem;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
