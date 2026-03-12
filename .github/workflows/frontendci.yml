@@ -1,4 +1,5 @@
 name: frontendci.yml
+
 on:
   push:
     branches: [main]
@@ -9,13 +10,20 @@ jobs:
   frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.1
+          cache: 'npm'
+
       - name: Install dependencies
         working-directory: frontend
-        run: npm install
+        run: npm ci
 
       - name: Build Angular app
         working-directory: frontend
