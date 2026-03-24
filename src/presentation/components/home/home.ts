@@ -1,16 +1,36 @@
-import { Component } from '@angular/core';
-import {ChangeDetectionStrategy,model} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import {NgClass, NgOptimizedImage} from '@angular/common';
+import {Component, computed, signal, Signal, WritableSignal} from '@angular/core';
+import {DateTime, Info, Interval} from 'luxon';
 
 @Component({
   selector: 'app-home',
-  imports: [MatCardModule, MatDatepickerModule],
+  imports: [MatCardModule, NgOptimizedImage, NgClass],
   templateUrl: './home.html',
   styleUrl: './home.css',
-  providers: [provideNativeDateAdapter()],
 })
-export class Home {
-  selected = model<Date | null>(null);
+export class HomeCalender {
+  today: Signal<DateTime> = signal(DateTime.local());
+  firstDayOfActiveMonth: WritableSignal<DateTime> = signal(
+    this.today().startOf('month'),
+  );
+  weekDays: Signal<string[]> = signal(Info.weekdays('short'));
+  daysOfMonth: Signal<DateTime[]> = computed(() => {
+    return Interval.fromDateTimes(
+      this.firstDayOfActiveMonth().startOf('week'),
+      this.firstDayOfActiveMonth().endOf('month').endOf('week'),
+    )
+
+      .splitBy({day: 1})
+      .map((d) => {
+        if (d.start === null) {
+          throw new Error('Wrong Dates')
+        }
+        return d.start;
+      });
+  });
+
+  constructor() {
+    console.log(this.daysOfMonth());
+  }
 }
