@@ -5,9 +5,13 @@
 }
 
 .HomeImg{
-  border-color: black;
-  border: 5px solid;
+  border: 5px solid darkgoldenrod;
   margin: 19px;
+
+  opacity: 1;
+  mix-blend-mode: normal;
+  filter: none;
+  background-color: white;
 }
 .calendar-container {
   width: 320px;

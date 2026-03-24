@@ -9,7 +9,7 @@ import {DateTime, Info, Interval} from 'luxon';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class HomeCalender {
+export class Home {
   today: Signal<DateTime> = signal(DateTime.local());
   firstDayOfActiveMonth: WritableSignal<DateTime> = signal(
     this.today().startOf('month'),
