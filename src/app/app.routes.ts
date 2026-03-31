@@ -3,6 +3,7 @@ import { Training } from '../presentation/components/training/training';
 import { Progressie } from '../presentation/components/progressie/progressie';
 import { Clubs} from '../presentation/components/clubs/clubs';
 import { Home} from '../presentation/components/home/home';
+import {Weight} from '../presentation/components/weight/weight';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: 'clubs',
     component:Clubs
-  }
+  },
+  {
+    path: 'weight',
+    component:Weight
+  },
 ];
