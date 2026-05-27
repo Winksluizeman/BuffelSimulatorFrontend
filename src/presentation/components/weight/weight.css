@@ -1,0 +1,67 @@
+/* ===== FORM LAYOUT ===== */
+.pushInput-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* ruimte tussen input velden */
+  max-width: 500px;
+  margin-bottom: 32px; /* BELANGRIJK: afstand tot table */
+}
+
+/* Angular Material form fields full width */
+.pushInput-form-fullwidth {
+  width: 100%;
+}
+
+/* Extra spacing specifiek onder gewicht/reps als je die extra wil benadrukken */
+.pushInput-form mat-form-field {
+  margin-bottom: 4px;
+}
+
+/* ===== TABLE WRAPPER ===== */
+table.mat-elevation-z8 {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== TABLE HEADER ===== */
+th.mat-header-cell {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+/* ===== TABLE CELLS ===== */
+td.mat-cell {
+  padding: 12px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* ===== ROW STYLING ===== */
+tr.mat-row {
+  transition: background 0.2s ease;
+}
+
+tr.mat-row:hover {
+  background: #f9f9f9;
+}
+
+/* ===== STRIPING (optioneel maar mooi) ===== */
+tr.mat-row:nth-child(even) {
+  background: #fcfcfc;
+}
+
+/* ===== TABLE CONTAINER SPACING ===== */
+table {
+  margin-top: 10px;
+}
+
+/* ===== BUTTON SPACING (optioneel) ===== */
+button {
+  align-self: flex-start;
+}
