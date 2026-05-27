@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  credentials = { name: '', email: '', password: '' };
+  credentials = { username: '', email: '', password: '' };
 
   constructor(private http: HttpClient, protected router: Router) {}
 
