@@ -4,6 +4,8 @@ import { Progressie } from '../presentation/components/progressie/progressie';
 import { Clubs} from '../presentation/components/clubs/clubs';
 import { Home} from '../presentation/components/home/home';
 import { Weight } from '../presentation/components/weight/weight';
+import {LoginComponent} from '../presentation/components/login.component/login.component';
+import {RegisterComponent} from '../presentation/components/register/component/register';
 
 export const routes: Routes = [
   {
@@ -31,4 +33,13 @@ export const routes: Routes = [
     path: 'weight',
     component:Weight
   },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+     path: 'register',
+     component: RegisterComponent,
+  }
+
 ];
