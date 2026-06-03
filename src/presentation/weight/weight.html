@@ -1,0 +1,66 @@
+<h1>Ingelogd als: {{name}}</h1>
+
+<form class="weightForm" #weightForm="ngForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="weightForm">
+    <mat-label>Oefening naam</mat-label>
+    <input matInput [(ngModel)]="exercise.name" name="name"
+           placeholder="bijv. Latpull" required #nameField="ngModel">
+    <mat-error *ngIf="nameField.invalid && nameField.touched">
+      Naam is verplicht
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="weightForm">
+    <mat-label>Categorie</mat-label>
+    <input matInput [(ngModel)]="exercise.category" name="category"
+           placeholder="push / pull / leg" required #categoryField="ngModel">
+    <mat-error *ngIf="categoryField.invalid && categoryField.touched">
+      Categorie is verplicht
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="weightForm">
+    <mat-label>Gewicht (kg)</mat-label>
+    <input matInput [(ngModel)]="exercise.weight" name="weight"
+           type="number" required #weightField="ngModel">
+    <mat-error *ngIf="weightField.invalid && weightField.touched">
+      Gewicht is verplicht
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="weightForm">
+    <mat-label>Reps</mat-label>
+    <input matInput [(ngModel)]="exercise.reps" name="reps"
+           type="number" required #repsField="ngModel">
+    <mat-error *ngIf="repsField.invalid && repsField.touched">
+      Reps is verplicht
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="weightForm.invalid">Opslaan</button>
+</form>
+
+<table mat-table [dataSource]="exercises" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Naam</th>
+    <td mat-cell *matCellDef="let exercise">{{exercise.name}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Categorie</th>
+    <td mat-cell *matCellDef="let exercise">{{exercise.category}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="weight">
+    <th mat-header-cell *matHeaderCellDef>Gewicht (kg)</th>
+    <td mat-cell *matCellDef="let exercise">{{exercise.weight}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="reps">
+    <th mat-header-cell *matHeaderCellDef>Reps</th>
+    <td mat-cell *matCellDef="let exercise">{{exercise.reps}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

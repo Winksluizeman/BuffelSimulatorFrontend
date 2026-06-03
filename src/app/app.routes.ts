@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
-import { Training } from '../presentation/components/training/training';
-import { Progressie } from '../presentation/components/progressie/progressie';
-import { Clubs} from '../presentation/components/clubs/clubs';
-import { Home} from '../presentation/components/home/home';
-import { Weight } from '../presentation/components/weight/weight';
-import {LoginComponent} from '../presentation/components/login.component/login.component';
-import {RegisterComponent} from '../presentation/components/register/component/register';
+
+import { Training } from '../presentation/training/training';
+import { Progressie } from '../presentation/progress/progressie';
+import { Clubs } from '../presentation/clubs/clubs';
+import { Home } from '../presentation/home/home';
+import { Weight } from '../presentation/weight/weight';
+import { Login } from '../presentation/login/login';
+import { RegisterComponent} from '../presentation/register/register';
 
 export const routes: Routes = [
   {
@@ -35,7 +36,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: Login,
   },
   {
      path: 'register',

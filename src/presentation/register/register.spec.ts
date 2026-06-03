@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Weight } from './weight';
+import { RegisterComponent } from './register';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
-describe('Weight', () => {
-  let component: Weight;
-  let fixture: ComponentFixture<Weight>;
+describe('Register', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Weight]
+      imports: [RegisterComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Weight);
+    fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

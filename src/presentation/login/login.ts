@@ -5,15 +5,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {LoginDto, LoginResponseDto} from '../../../dto/LoginDto';
+import { LoginDto, LoginResponseDto} from '../../infrastructure/dto/LoginDto';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.html'
 })
-export class LoginComponent {
+export class Login {
 
   credentials: LoginDto = { username: '', password: '' };
 
