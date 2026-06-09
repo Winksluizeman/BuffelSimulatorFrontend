@@ -7,6 +7,7 @@ import { Home } from '../presentation/home/home';
 import { Weight } from '../presentation/weight/weight';
 import { Login } from '../presentation/login/login';
 import { RegisterComponent} from '../presentation/register/register';
+import {authGuard} from '../infrastructure/auth.guard';
 
 export const routes: Routes = [
   {
@@ -32,15 +33,16 @@ export const routes: Routes = [
   },
   {
     path: 'weight',
-    component:Weight
+    component:Weight,
+    canActivate: [authGuard]
   },
   {
     path: 'login',
-    component: Login,
+    component: Login
   },
   {
      path: 'register',
-     component: RegisterComponent,
+     component: RegisterComponent
   }
 
 ];
