@@ -6,7 +6,9 @@
     "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "cy:run": "cypress run",
+    "e2e:ci": "start-server-and-test start http://localhost:4200 cy:run"
   },
   "prettier": {
     "printWidth": 100,
@@ -43,6 +45,7 @@
     "@types/mocha": "^10.0.10",
     "cypress": "^15.16.0",
     "jsdom": "^27.1.0",
+    "start-server-and-test": "^3.0.9",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
