@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +17,10 @@ export class RegisterComponent {
 
   credentials = { username: '', email: '', password: '' };
 
-  constructor(private http: HttpClient, protected router: Router) {}
+  constructor(private authService: AuthService, protected router: Router) {}
 
   onRegister(): void {
-    this.http.post('http://localhost:8080/auth/register', this.credentials).subscribe({
+    this.authService.register(this.credentials).subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => alert('Registratie mislukt, probeer opnieuw')
     });

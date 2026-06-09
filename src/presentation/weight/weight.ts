@@ -5,8 +5,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { NgIf } from '@angular/common';
-import { WeightDto} from '../../infrastructure/dto/weight.dto';
+import { WeightDto } from '../../infrastructure/dto/weight.dto';
 import { WeightService } from './weight.service';
+import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-weight',
@@ -18,32 +20,20 @@ import { WeightService } from './weight.service';
 export class Weight implements OnInit {
 
   exercise: WeightDto = { name: '', category: '', weight: 0, reps: 0 };
-  name: string = '';
+  username: string = '';
   displayedColumns: string[] = ['name', 'category', 'weight', 'reps'];
   exercises: WeightDto[] = [];
 
-  constructor(private weightService: WeightService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+    private weightService: WeightService
+  ) {}
 
   ngOnInit(): void {
-    this.name = this.getNameFromToken();
+    this.username = this.authService.getUsernameFromToken();
     this.loadExercises();
-  }
-
-  getNameFromToken(): string {
-    const token = localStorage.getItem('token');
-    if (!token) return '';
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.sub;
-  }
-
-  onSubmit(): void {
-    this.weightService.save(this.exercise).subscribe({
-      next: () => {
-        console.log('Verzonden naar database');
-        this.loadExercises();
-      },
-      error: (err) => console.error('Versturen naar de database niet gelukt:', err)
-    });
   }
 
   loadExercises(): void {
@@ -52,7 +42,22 @@ export class Weight implements OnInit {
         this.exercises = data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Ophalen mislukt:', err)
+      error: (err) => console.error('Fout bij laden:', err)
     });
+  }
+
+  onSubmit(): void {
+    this.weightService.save(this.exercise).subscribe({
+      next: () => {
+        this.exercise = { name: '', category: '', weight: 0, reps: 0 };
+        this.loadExercises();
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Fout bij opslaan:', err)
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -38,7 +38,11 @@
     "@angular/build": "^21.2.0",
     "@angular/cli": "^21.2.2",
     "@angular/compiler-cli": "^21.2.0",
+    "@types/cypress": "^0.1.6",
+    "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
+    "@types/mocha": "^10.0.10",
+    "cypress": "^15.16.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

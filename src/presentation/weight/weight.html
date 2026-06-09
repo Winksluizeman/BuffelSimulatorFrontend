@@ -1,4 +1,7 @@
-<h1>Ingelogd als: {{name}}</h1>
+<div class="header">
+  <h1> Ingelogd als: {{ username }}</h1>
+  <button mat-button (click)="logout()">Uitloggen</button>
+</div>
 
 <form class="weightForm" #weightForm="ngForm" (ngSubmit)="onSubmit()">
   <mat-form-field class="weightForm">

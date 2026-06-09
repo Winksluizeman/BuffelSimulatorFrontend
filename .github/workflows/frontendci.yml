@@ -26,3 +26,6 @@ jobs:
 
       - name: Build Angular app
         run: npm run build -- --configuration production
+
+      - name: E2E tests (Cypress)
+        run: npx cypress run

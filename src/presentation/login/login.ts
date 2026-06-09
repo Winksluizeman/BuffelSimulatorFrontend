@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoginDto, LoginResponseDto} from '../../infrastructure/dto/LoginDto';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,18 +16,20 @@ import { LoginDto, LoginResponseDto} from '../../infrastructure/dto/LoginDto';
 })
 export class Login {
 
-  credentials: LoginDto = { username: '', password: '' };
+  credentials: LoginDto = {username: '', password: ''};
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   onLogin(): void {
-    this.http.post<LoginResponseDto>('http://localhost:8080/auth/login', this.credentials)
-      .subscribe({
-        next: (res) => {
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/weight']);
-        },
-        error: () => alert('Gebruikersnaam of wachtwoord onjuist')
-      });
+    this.authService.login(this.credentials).subscribe({
+      next: (res) => {
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/weight']);
+      },
+      error: () => alert('Gebruikersnaam of wachtwoord onjuist')
+    });
   }
+
 }
+
