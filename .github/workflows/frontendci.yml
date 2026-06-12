@@ -1,4 +1,4 @@
-name: frontendci.yml
+name: Frontend CI
 
 on:
   push:
@@ -8,24 +8,43 @@ on:
 
 jobs:
   frontend:
-    name: Build Frontend
+    name: Build, Test & Analyse Frontend
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Use Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Installeer dependencies
         run: npm ci
 
-      - name: Build Angular app
-        run: npm run build -- --configuration production
+      - name: Build Angular applicatie
+        run: npm run build
 
-      - name: E2E tests (Cypress)
+      # ─── Stap 1: E2E tests via Cypress ───────────────────────────
+      - name: E2E tests uitvoeren
         run: npm run e2e:ci
+
+      # ─── Stap 2: Cypress screenshots uploaden bij falen ──────────
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots/
+          retention-days: 14
+
+      # ─── Stap 3: SonarCloud analyse ───────────────────────────────
+      - name: SonarCloud analyse
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
