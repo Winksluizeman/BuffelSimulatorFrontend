@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { NgIf } from '@angular/common';
 import { WeightDto } from '../../infrastructure/dto/weight.dto';
-import { WeightService } from './weight.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,43 +16,63 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './weight.html',
   styleUrls: ['./weight.css']
 })
-export class Weight implements OnInit {
 
-  exercise: WeightDto = { name: '', category: '', weight: 0, reps: 0 };
+export class Weight implements OnInit, OnDestroy {
+
+  private eventSource: EventSource | null = null;
+
   username: string = '';
+  exercise: WeightDto = { name: '', category: '', weight: 0, reps: 0 };
   displayedColumns: string[] = ['name', 'category', 'weight', 'reps'];
   exercises: WeightDto[] = [];
 
   constructor(
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService,
-    private weightService: WeightService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.username = this.authService.getUsernameFromToken();
     this.loadExercises();
+    this.subscribeToEvents();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSource) {
+      this.eventSource.close();
+    }
+  }
+
+  subscribeToEvents(): void {
+    const token = this.authService.getToken();
+    this.eventSource = new EventSource(
+      `http://localhost:8080/Weight/events?token=${token}`
+    );
+
+    this.eventSource.addEventListener('exercise-saved', () => {
+      this.loadExercises();
+    });
+
+    this.eventSource.onerror = () => {
+      this.eventSource?.close();
+    };
+  }
+
+  onSubmit(): void {
+    this.http.post('http://localhost:8080/Weight', this.exercise).subscribe({
+      next: () => console.log('Opgeslagen'),
+      error: (err) => console.error('Fout:', err)
+    });
   }
 
   loadExercises(): void {
-    this.weightService.getAll().subscribe({
+    this.http.get<WeightDto[]>('http://localhost:8080/Weight').subscribe({
       next: (data) => {
         this.exercises = data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Fout bij laden:', err)
-    });
-  }
-
-  onSubmit(): void {
-    this.weightService.save(this.exercise).subscribe({
-      next: () => {
-        this.exercise = { name: '', category: '', weight: 0, reps: 0 };
-        this.loadExercises();
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error('Fout bij opslaan:', err)
+      error: (err) => console.error('Ophalen mislukt:', err)
     });
   }
 
