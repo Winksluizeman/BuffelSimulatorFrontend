@@ -43,6 +43,7 @@
     "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
     "@types/mocha": "^10.0.10",
+    "@vitest/coverage-v8": "^4.1.9",
     "cypress": "^15.16.0",
     "jsdom": "^27.1.0",
     "start-server-and-test": "^3.0.9",
