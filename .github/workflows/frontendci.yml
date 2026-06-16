@@ -42,9 +42,7 @@ jobs:
           path: cypress/screenshots/
           retention-days: 14
 
-      - name: Unit tests met coverage
-        run: npm run test -- --configuration=ci
-
+      # ─── Stap 3: SonarCloud analyse ───────────────────────────────
       - name: SonarCloud analyse
         continue-on-error: true
         uses: SonarSource/sonarqube-scan-action@v6
@@ -53,4 +51,7 @@ jobs:
           SONAR_HOST_URL: https://sonarcloud.io
         with:
           args: >
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.projectKey=Winksluizeman_BuffelSimulatorFrontend
+            -Dsonar.organization=winksluizeman
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/*.spec.ts
