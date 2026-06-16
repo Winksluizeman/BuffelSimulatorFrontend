@@ -1,13 +1,29 @@
-FROM node:22
+# Build stage
+FROM node:22 AS build
 
-# work directory
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-EXPOSE 4200
+# Bouw de Angular applicatie voor productie
+RUN npm run build
 
-CMD ["npm", "start"]
+# Run stage — serveer via nginx
+FROM nginx:alpine
+
+# Verwijder de standaard nginx config
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Voeg onze eigen nginx config toe
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Kopieer de Angular build output naar nginx
+# Pas 'buffel-simulator' aan naar jouw project naam (staat in angular.json onder "outputPath")
+COPY --from=build /app/dist/BuffelSimulatorFrontend/browser /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
