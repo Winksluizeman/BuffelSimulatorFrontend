@@ -68,15 +68,11 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "codeCoverage": true,
-            "codeCoverageExclude": [],
-            "reporters": ["progress", "kjhtml"]
+            "runner": "vitest"
           },
           "configurations": {
             "ci": {
-              "browsers": "ChromeHeadless",
-              "watch": false,
-              "codeCoverage": true
+              "watch": false
             }
           }
         }
