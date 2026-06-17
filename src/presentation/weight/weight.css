@@ -14,7 +14,7 @@
 
 /* Extra spacing specifiek onder gewicht/reps als je die extra wil benadrukken */
 .pushInput-form mat-form-field {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 /* ===== TABLE WRAPPER ===== */
