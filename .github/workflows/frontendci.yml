@@ -42,6 +42,14 @@ jobs:
           path: cypress/screenshots/
           retention-days: 14
 
+      - name: Check secrets aanwezig
+        run: |
+          if [ -z "${{ secrets.DOCKERHUB_TOKEN }}" ]; then
+            echo "DOCKERHUB_TOKEN is LEEG"
+          else
+            echo "DOCKERHUB_TOKEN is ingesteld"
+          fi
+
       # ─── Stap 3: SonarCloud analyse ───────────────────────────────
       - name: SonarCloud analyse
         continue-on-error: true
